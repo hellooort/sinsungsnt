@@ -29,7 +29,7 @@ export default function App() {
   const [introDone, setIntroDone] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIntroDone(true), 2800);
+    const timer = setTimeout(() => setIntroDone(true), 1800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -165,7 +165,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="w-[28rem] md:w-[40rem] max-w-[90vw] brightness-0 invert"
+              className="w-[20rem] md:w-[30rem] max-w-[80vw] brightness-0 invert"
             />
           </motion.div>
 
@@ -179,7 +179,7 @@ export default function App() {
             <iframe
               src="https://www.youtube.com/embed/QfKg5_4c4wc?autoplay=1&mute=1&loop=1&playlist=QfKg5_4c4wc&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1"
               title="신성에스엔티 배경 영상"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] md:w-[180%] md:h-[180%] min-w-full min-h-full pointer-events-none"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500%] h-[500%] md:w-[180%] md:h-[180%] min-w-full min-h-full pointer-events-none"
               style={{ aspectRatio: '16/9' }}
               allow="autoplay; encrypted-media"
               frameBorder="0"
@@ -363,8 +363,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
           <div className="text-center mb-16 md:mb-24">
             <div className="text-sm font-bold text-brand tracking-widest mb-4">CORE COMPETENCY</div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">신성이 만드는 디테일의 차이</h2>
-            <p className="text-xl text-slate-500 max-w-2xl mx-auto">0.1mm의 디테일이 공간의 품격을 결정합니다.</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">신성이 만드는<br className="md:hidden" /> 디테일의 차이</h2>
+            <p className="text-xl text-slate-500 max-w-2xl mx-auto">0.1mm의 디테일이<br className="md:hidden" /> 공간의 품격을 결정합니다.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -445,7 +445,7 @@ export default function App() {
           <div className="text-center mb-12 md:mb-16">
             <div className="text-sm font-bold text-brand tracking-widest mb-4">PROCESS</div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4">제작 진행 프로세스</h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">문의부터 사후 관리까지, 완벽한 결과물을 위한 7단계.</p>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">문의부터 사후 관리까지,<br className="md:hidden" /> 완벽한 결과물을 위한 7단계.</p>
           </div>
 
           {/* Desktop: Horizontal Steps */}
@@ -518,7 +518,7 @@ export default function App() {
               까다로운 기준을 요구하는 공간에서<br className="hidden md:block" /> 선택받아 왔습니다
             </h2>
             <p className="text-lg text-blue-100/80 max-w-3xl mx-auto leading-relaxed mb-16">
-              신성에스엔티는 단순 납품 업체가 아니라 브랜드의 공간 완성도를 함께 고민하는 금속 제작 파트너입니다.
+              신성에스엔티는 단순 납품 업체가 아니라<br className="md:hidden" /> 브랜드의 공간 완성도를 함께 고민하는<br className="md:hidden" /> 금속 제작 파트너입니다.
             </p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">

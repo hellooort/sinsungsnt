@@ -1,8 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 /** 입력 길이 상한 — 초과 시 400. 폼 남용/대용량 페이로드 방지용. */
 const LIMITS = {
   company: 100,
@@ -135,6 +133,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     .join('\n');
 
   try {
+    // 키가 없으면 생성자가 예외를 던지므로, 환경변수 확인을 통과한 뒤에 만든다.
+    const resend = new Resend(RESEND_API_KEY);
     const { data, error } = await resend.emails.send({
       from: MAIL_FROM,
       to: MAIL_TO.split(',').map((addr) => addr.trim()).filter(Boolean),

@@ -5,7 +5,7 @@ import {
   Ruler, Wrench, Sparkles, ShieldCheck, Layers,
   MessageSquare, ClipboardList, FileSearch, Lightbulb,
   Hammer, Truck, HeartHandshake, ExternalLink, Play,
-  Clock, Send, ChevronRight, User, Building2, FileText, Plus
+  Clock, Send, ChevronRight, ChevronLeft, User, Building2, FileText, ZoomIn
 } from 'lucide-react';
 
 const LogoIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
@@ -40,12 +40,13 @@ const MAP_EMBED_URL = `https://maps.google.com/maps?q=${MAP_COORD}&z=16&hl=ko&ou
 
 /* ─── 메인 슬라이드 (시공 매장 사진) ─── */
 const heroSlides = [
-  { img: '/images/hero/valentino.jpg', brand: 'VALENTINO', alt: '발렌티노 뷰티 매장 금속 집기 시공 현장' },
-  { img: '/images/hero/nars.jpg', brand: 'NARS', alt: '나스 신세계 강남점 매장 금속 집기 시공 현장' },
-  { img: '/images/hero/decorte.jpg', brand: 'DECORTE', alt: '코스메데코르테 매장 금속 진열장 시공 현장' },
-  { img: '/images/hero/lancome.jpg', brand: 'LANCOME', alt: '랑콤 매장 금속 집기 시공 현장' },
-  { img: '/images/hero/royal-salute.jpg', brand: 'ROYAL SALUTE', alt: '로얄살루트·시바스리갈 면세 매장 진열장 시공 현장' },
-  { img: '/images/hero/montblanc.jpg', brand: 'MONTBLANC', alt: '몽블랑 매장 금속 집기 시공 현장' },
+  { img: '/images/hero/alaia.jpg', brand: 'ALAIA', alt: '알라이아 롯데 본점 매장 금속 진열 가구 시공 현장' },
+  { img: '/images/hero/camper.jpg', brand: 'CAMPER', alt: '캠퍼 매장 진열 집기 시공 현장' },
+  { img: '/images/hero/prada.jpg', brand: 'PRADA', alt: '프라다 매장 금속 진열장 시공 현장' },
+  { img: '/images/hero/vivienne-westwood.jpg', brand: 'VIVIENNE WESTWOOD', alt: '비비안웨스트우드 매장 집기 시공 현장' },
+  { img: '/images/hero/cpb.jpg', brand: 'CPB', alt: '끌레드뽀 보떼 매장 진열 집기 시공 현장' },
+  { img: '/images/hero/montblanc.jpg', brand: 'MONTBLANC', alt: '몽블랑 매장 진열장 시공 현장' },
+  { img: '/images/hero/miu-miu.jpg', brand: 'MIU MIU', alt: '미우미우 백화점 아트리움 연출 구조물' },
 ];
 const HERO_INTERVAL = 5500;
 
@@ -71,7 +72,7 @@ const serviceCategories: ServiceCategory[] = [
   {
     title: "금속 집기 제작",
     desc: <>브랜드 매장의 핵심 진열 집기를 정밀하게 제작합니다.<br className="hidden md:block" /> 백화점, 면세점 등 하이엔드 공간에 최적화된 구조와 마감을 제공합니다.</>,
-    items: ["브랜드 진열장", "곤도라", "POS", "싱글타워", "듀얼타워", "벽장", "캐노피", "분리대", "창고장"],
+    items: ["브랜드 진열장", "곤도라", "POS", "싱글타워", "듀얼타워", "벽장", "캐노피"],
     layout: 'grid3',
     media: [
       { type: 'image', src: '/images/services/fixture-showcase-prada.jpg', label: '브랜드 진열장', brand: 'PRADA', alt: '프라다 매장 금속 브랜드 진열장' },
@@ -99,7 +100,7 @@ const serviceCategories: ServiceCategory[] = [
     items: ["도면 기반 제작", "라운딩 구조물", "정밀 절곡 / 타공", "헤어라인 / 폴리싱 마감", "하이엔드 브랜드 집기"],
     layout: 'feature',
     media: [
-      { type: 'video', src: '/images/services/custom-diptyque-seongsu.mp4', poster: '/images/services/custom-diptyque-seongsu.jpg', label: '팝업 스토어 구조물', brand: 'DIPTYQUE 성수', alt: '딥디크 성수 팝업 스토어 원형 금속 구조물 영상' },
+      { type: 'video', src: '/images/services/custom-diptyque-seongsu.mp4', poster: '/images/services/custom-diptyque-seongsu-poster.jpg', label: '팝업 스토어 구조물', brand: 'DIPTYQUE 성수', alt: '딥디크 성수 팝업 스토어 원형 금속 구조물 영상' },
       { type: 'image', src: '/images/services/custom-liquor-cabinet.jpg', label: '양주장', alt: '주문제작 금속 양주장' },
       { type: 'image', src: '/images/services/custom-fleet-runner.jpg', label: '플릿러너', alt: '주문제작 플릿러너 금속 구조물' },
     ],
@@ -157,7 +158,6 @@ const portfolioItems: PortfolioItem[] = [
   { brand: 'SU:M37', cat: '화장품 · 뷰티', img: '/images/portfolio/sum37.jpg', alt: '숨37 매장 시공' },
   { brand: 'SNP', cat: '화장품 · 뷰티', img: '/images/portfolio/snp.jpg', alt: 'SNP 매장 진열 집기' },
 ];
-const PORTFOLIO_INITIAL = 12;
 
 /* ─── 주요 사업분야 (고객사 제공 문구) ─── */
 const businessAreas = [
@@ -232,7 +232,7 @@ export default function App() {
   const [introDone, setIntroDone] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
   const [portfolioFilter, setPortfolioFilter] = useState<PortfolioCategory>('전체');
-  const [portfolioExpanded, setPortfolioExpanded] = useState(false);
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [formError, setFormError] = useState('');
 
@@ -305,13 +305,13 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (mobileMenuOpen) {
+    if (mobileMenuOpen || lightbox !== null) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
     return () => { document.body.style.overflow = ''; };
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, lightbox]);
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
@@ -323,8 +323,8 @@ export default function App() {
     { name: '회사소개', id: 'about' },
     { name: '제작분야', id: 'services' },
     { name: '핵심역량', id: 'tech' },
-    { name: '포트폴리오', id: 'portfolio' },
     { name: '사업분야', id: 'business' },
+    { name: '포트폴리오', id: 'portfolio' },
     { name: '진행프로세스', id: 'process' },
   ];
 
@@ -351,24 +351,35 @@ export default function App() {
   const filteredPortfolio = portfolioFilter === '전체'
     ? portfolioItems
     : portfolioItems.filter((item) => item.cat === portfolioFilter);
-  const visiblePortfolio = portfolioFilter === '전체' && !portfolioExpanded
-    ? filteredPortfolio.slice(0, PORTFOLIO_INITIAL)
-    : filteredPortfolio;
-  const hiddenPortfolioCount = filteredPortfolio.length - visiblePortfolio.length;
+  const lightboxItem = lightbox !== null ? filteredPortfolio[lightbox] : undefined;
+  const moveLightbox = (step: number) =>
+    setLightbox((i) => (i === null ? null : (i + step + filteredPortfolio.length) % filteredPortfolio.length));
+
+  // 사진 크게 보기: Esc 닫기, 좌우 화살표로 넘기기
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightbox(null);
+      if (e.key === 'ArrowRight') moveLightbox(1);
+      if (e.key === 'ArrowLeft') moveLightbox(-1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox, filteredPortfolio.length]);
 
   return (
     <div className="min-h-screen bg-white text-slate-600 font-sans selection:bg-brand selection:text-white">
       {/* ─── Navbar ─── */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 py-3 shadow-sm' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-          <button className={`text-2xl font-bold tracking-tighter flex items-center gap-2 transition-colors ${isScrolled ? 'text-brand' : 'text-white'}`} onClick={() => scrollTo('hero')} aria-label="홈으로 이동">
+          <button className="text-2xl font-bold tracking-tighter flex items-center gap-2 transition-colors text-brand" onClick={() => scrollTo('hero')} aria-label="홈으로 이동">
             <LogoIcon className="w-8 h-8" />
             신성에스엔티
           </button>
 
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navLinks.map((link) => (
-              <button key={link.name} onClick={() => scrollTo(link.id)} className={`text-sm font-medium transition-colors ${isScrolled ? 'text-slate-600 hover:text-brand' : 'text-white/80 hover:text-white'}`}>
+              <button key={link.name} onClick={() => scrollTo(link.id)} className="text-sm font-medium transition-colors text-slate-700 hover:text-brand">
                 {link.name}
               </button>
             ))}
@@ -376,17 +387,17 @@ export default function App() {
               href={TIMECAPSULE_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold border transition-colors ${isScrolled ? 'border-brand/30 text-brand hover:bg-brand/5' : 'border-white/40 text-white hover:bg-white/10'}`}
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold border transition-colors border-brand/30 bg-white/70 text-brand hover:bg-brand/5"
             >
               대한타임캡슐 <ExternalLink size={14} aria-hidden="true" />
               <span className="sr-only">(네이버 스마트스토어, 새 창)</span>
             </a>
-            <button onClick={() => scrollTo('contact')} className={`px-5 py-2.5 text-sm font-semibold transition-colors ${isScrolled ? 'bg-brand text-white hover:bg-brand-dark' : 'bg-white text-brand hover:bg-slate-100'}`}>
+            <button onClick={() => scrollTo('contact')} className="px-5 py-2.5 text-sm font-semibold transition-colors bg-brand text-white hover:bg-brand-dark">
               문의하기
             </button>
           </div>
 
-          <button className={`lg:hidden ${isScrolled ? 'text-slate-900' : 'text-white'}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'} aria-expanded={mobileMenuOpen}>
+          <button className="lg:hidden text-slate-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'} aria-expanded={mobileMenuOpen}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -430,7 +441,7 @@ export default function App() {
       )}
 
       {/* ═══════════════════ HERO ═══════════════════ */}
-      <section id="hero" className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-slate-950">
+      <section id="hero" className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-white">
         {/* 슬라이드 사진 미리 불러오기 */}
         <div className="hidden" aria-hidden="true">
           {heroSlides.map((s) => <img key={s.img} src={s.img} alt="" />)}
@@ -442,7 +453,7 @@ export default function App() {
             initial={{ opacity: 1 }}
             animate={{ opacity: introDone ? 0 : 1 }}
             transition={{ duration: 0.8 }}
-            className="absolute inset-0 z-20 bg-slate-950 flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 z-20 bg-white flex items-center justify-center pointer-events-none"
             style={{ display: introDone ? 'none' : undefined }}
           >
             <motion.img
@@ -451,7 +462,7 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="w-[20rem] md:w-[30rem] max-w-[80vw] brightness-0 invert"
+              className="w-[20rem] md:w-[30rem] max-w-[80vw]"
             />
           </motion.div>
 
@@ -467,8 +478,9 @@ export default function App() {
               className="absolute inset-0 w-full h-full object-cover"
             />
           </AnimatePresence>
-          <div className="absolute inset-0 z-10 bg-slate-950/60 md:bg-transparent md:bg-gradient-to-r md:from-slate-950/90 md:via-slate-950/65 md:to-slate-950/15" />
-          <div className="absolute inset-x-0 bottom-0 h-1/3 z-10 bg-gradient-to-t from-slate-950/70 to-transparent" />
+          {/* 밝은 덮개: 사진은 밝게 보이고 왼쪽 글자 영역만 흰색으로 받쳐 준다 */}
+          <div className="absolute inset-0 z-10 bg-white/70 md:bg-transparent md:bg-gradient-to-r md:from-white/90 md:via-white/55 md:to-white/0" />
+          <div className="absolute inset-x-0 bottom-0 h-1/4 z-10 bg-gradient-to-t from-white/70 to-transparent" />
         </div>
 
         <motion.div
@@ -478,22 +490,22 @@ export default function App() {
           className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 w-full"
         >
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 text-sm text-white/90 font-medium mb-8 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-brand-light rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 border border-slate-200 text-sm text-slate-700 font-medium mb-8 backdrop-blur-sm">
+              <span className="w-2 h-2 bg-brand rounded-full animate-pulse" />
               금속 집기 · 금속 인테리어 전문 제작
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-[1.15] mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 tracking-tight leading-[1.15] mb-6">
               공간을 빛내는<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-light to-blue-300">금속의 품격</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">금속의 품격</span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-200 mb-10 leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-700 mb-10 leading-relaxed">
               백화점, 면세점, 브랜드 매장에 필요한 고급 금속 집기와 인테리어를<br className="hidden md:block" /> 정밀한 제작력과 책임 시공으로 완성합니다.
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <button onClick={() => scrollTo('contact')} className="w-full sm:w-auto px-8 py-4 bg-brand text-white font-semibold hover:bg-brand-light transition-colors flex items-center justify-center gap-2 group">
+              <button onClick={() => scrollTo('contact')} className="w-full sm:w-auto px-8 py-4 bg-brand text-white font-semibold hover:bg-brand-dark transition-colors flex items-center justify-center gap-2 group">
                 제작 문의하기 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button onClick={() => scrollTo('portfolio')} className="w-full sm:w-auto px-8 py-4 border border-white/40 text-white hover:bg-white/10 transition-colors">
+              <button onClick={() => scrollTo('portfolio')} className="w-full sm:w-auto px-8 py-4 border border-slate-400 bg-white/60 text-slate-800 font-semibold hover:bg-white transition-colors">
                 포트폴리오 보기
               </button>
             </div>
@@ -508,10 +520,10 @@ export default function App() {
           className="absolute bottom-8 md:bottom-12 inset-x-0 z-20"
         >
           <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center gap-5">
-            <div className="text-white text-xs md:text-sm font-semibold tracking-widest whitespace-nowrap">
+            <div className="text-slate-900 text-xs md:text-sm font-semibold tracking-widest whitespace-nowrap">
               <span>{String(heroIndex + 1).padStart(2, '0')}</span>
-              <span className="text-white/40"> / {String(heroSlides.length).padStart(2, '0')}</span>
-              <span className="text-white/60 ml-3">{heroSlides[heroIndex].brand}</span>
+              <span className="text-slate-400"> / {String(heroSlides.length).padStart(2, '0')}</span>
+              <span className="text-slate-600 ml-3">{heroSlides[heroIndex].brand}</span>
             </div>
             <div className="flex gap-1.5" role="tablist" aria-label="메인 슬라이드 선택">
               {heroSlides.map((s, idx) => (
@@ -521,7 +533,7 @@ export default function App() {
                   aria-selected={idx === heroIndex}
                   aria-label={`${idx + 1}번째 사진 (${s.brand})`}
                   onClick={() => setHeroIndex(idx)}
-                  className={`h-[3px] transition-all duration-500 ${idx === heroIndex ? 'w-10 bg-white' : 'w-5 bg-white/30 hover:bg-white/60'}`}
+                  className={`h-[3px] transition-all duration-500 ${idx === heroIndex ? 'w-10 bg-slate-900' : 'w-5 bg-slate-900/20 hover:bg-slate-900/50'}`}
                 />
               ))}
             </div>
@@ -725,77 +737,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* ═══════════════════ PORTFOLIO ═══════════════════ */}
-      <section id="portfolio" className="py-24 md:py-32 bg-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,_rgba(0,82,164,0.15),_transparent_70%)]" />
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
-          <div className="mb-10 md:mb-12">
-            <div className="text-sm font-bold text-brand-light tracking-widest mb-4">PORTFOLIO</div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">프로젝트 사례</h2>
-            <p className="text-lg text-slate-400">하이엔드 브랜드의 까다로운 기준을 충족시킨 결과물입니다.</p>
-          </div>
-
-          {/* 분야 선택 */}
-          <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 md:flex-wrap mb-8" role="tablist" aria-label="포트폴리오 분야">
-            {portfolioCategories.map((cat) => {
-              const count = cat === '전체' ? portfolioItems.length : portfolioItems.filter((i) => i.cat === cat).length;
-              const selected = portfolioFilter === cat;
-              return (
-                <button
-                  key={cat}
-                  role="tab"
-                  aria-selected={selected}
-                  onClick={() => { setPortfolioFilter(cat); setPortfolioExpanded(false); }}
-                  className={`shrink-0 px-4 py-2.5 text-sm font-semibold border transition-colors ${selected ? 'bg-brand border-brand text-white' : 'border-slate-700 text-slate-400 hover:text-white hover:border-slate-500'}`}
-                >
-                  {cat} <span className={selected ? 'text-white/60' : 'text-slate-600'}>{count}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {visiblePortfolio.map((item, idx) => (
-              <motion.figure
-                key={item.img}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: (idx % 4) * 0.06 }}
-                className="group bg-slate-800 border border-slate-700/50 hover:border-brand/50 transition-colors"
-              >
-                <div className="aspect-[4/3] overflow-hidden bg-slate-800">
-                  <img
-                    src={item.img}
-                    alt={item.alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    loading="lazy"
-                  />
-                </div>
-                <figcaption className="p-4 md:p-5">
-                  <div className="text-[11px] font-semibold text-brand-light/80 mb-1.5">{item.cat}</div>
-                  <div className="text-sm md:text-base font-bold text-white tracking-wide leading-snug">{item.brand}</div>
-                  {item.site && <div className="text-xs text-slate-400 mt-1">{item.site}</div>}
-                </figcaption>
-              </motion.figure>
-            ))}
-          </div>
-
-          {hiddenPortfolioCount > 0 && (
-            <div className="mt-10 text-center">
-              <button
-                onClick={() => setPortfolioExpanded(true)}
-                className="inline-flex items-center gap-2 px-8 py-4 border border-slate-600 text-white font-semibold hover:bg-white/5 hover:border-slate-400 transition-colors"
-              >
-                <Plus size={18} aria-hidden="true" /> 사례 더 보기 ({hiddenPortfolioCount})
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-
       {/* ═══════════════════ BUSINESS AREAS ═══════════════════ */}
-      <section id="business" className="py-24 md:py-32 bg-white relative overflow-hidden">
+      <section id="business" className="py-24 md:py-32 bg-slate-50 border-y border-slate-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center mb-14 md:mb-20">
             <div className="text-sm font-bold text-brand tracking-widest mb-4">BUSINESS AREAS</div>
@@ -829,6 +772,130 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════ PORTFOLIO ═══════════════════ */}
+      <section id="portfolio" className="py-24 md:py-32 bg-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,_rgba(0,82,164,0.15),_transparent_70%)]" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
+          <div className="mb-10 md:mb-12">
+            <div className="text-sm font-bold text-brand-light tracking-widest mb-4">PORTFOLIO</div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">프로젝트 사례</h2>
+            <p className="text-lg text-slate-400">하이엔드 브랜드의 까다로운 기준을 충족시킨 결과물입니다.</p>
+          </div>
+
+          {/* 분야 선택 */}
+          <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 md:flex-wrap mb-8" role="tablist" aria-label="포트폴리오 분야">
+            {portfolioCategories.map((cat) => {
+              const selected = portfolioFilter === cat;
+              return (
+                <button
+                  key={cat}
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setPortfolioFilter(cat)}
+                  className={`shrink-0 px-4 py-2.5 text-sm font-semibold border transition-colors ${selected ? 'bg-brand border-brand text-white' : 'border-slate-700 text-slate-400 hover:text-white hover:border-slate-500'}`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {filteredPortfolio.map((item, idx) => (
+              <motion.figure
+                key={item.img}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: (idx % 4) * 0.06 }}
+                className="group bg-slate-800 border border-slate-700/50 hover:border-brand/50 transition-colors"
+              >
+                <button
+                  type="button"
+                  onClick={() => setLightbox(idx)}
+                  className="relative block w-full aspect-[4/3] overflow-hidden bg-slate-800 cursor-zoom-in"
+                  aria-label={`${item.brand} 사진 크게 보기`}
+                >
+                  <img
+                    src={item.img}
+                    alt={item.alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <span className="absolute right-2 bottom-2 w-8 h-8 flex items-center justify-center bg-slate-950/60 text-white opacity-80 group-hover:opacity-100 transition-opacity" aria-hidden="true">
+                    <ZoomIn size={16} />
+                  </span>
+                </button>
+                <figcaption className="p-4 md:p-5">
+                  <div className="text-[11px] font-semibold text-brand-light/80 mb-1.5">{item.cat}</div>
+                  <div className="text-sm md:text-base font-bold text-white tracking-wide leading-snug">{item.brand}</div>
+                  {item.site && <div className="text-xs text-slate-400 mt-1">{item.site}</div>}
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 포트폴리오 사진 크게 보기 */}
+      <AnimatePresence>
+        {lightboxItem && (
+          <motion.div
+            key="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[60] bg-slate-950/95 flex flex-col"
+            role="dialog"
+            aria-modal="true"
+            aria-label="포트폴리오 사진 크게 보기"
+            onClick={() => setLightbox(null)}
+          >
+            <div className="flex items-center justify-between gap-4 px-4 md:px-8 py-4 text-white" onClick={(e) => e.stopPropagation()}>
+              <div className="min-w-0">
+                <div className="text-xs font-semibold text-brand-light">{lightboxItem.cat}</div>
+                <div className="text-lg md:text-xl font-bold truncate">
+                  {lightboxItem.brand}
+                  {lightboxItem.site && <span className="ml-2 text-sm md:text-base font-medium text-slate-400">{lightboxItem.site}</span>}
+                </div>
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <span className="text-sm text-slate-400">{(lightbox ?? 0) + 1} / {filteredPortfolio.length}</span>
+                <button type="button" onClick={() => setLightbox(null)} className="p-2 hover:bg-white/10 transition-colors" aria-label="닫기">
+                  <X size={26} />
+                </button>
+              </div>
+            </div>
+            <div className="relative flex-1 min-h-0 flex items-center justify-center px-4 md:px-24 pb-6">
+              <img
+                key={lightboxItem.img}
+                src={lightboxItem.img}
+                alt={lightboxItem.alt}
+                className="max-w-full max-h-full object-contain shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); moveLightbox(-1); }}
+                className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-11 h-11 md:w-14 md:h-14 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-colors"
+                aria-label="이전 사진"
+              >
+                <ChevronLeft size={28} />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); moveLightbox(1); }}
+                className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-11 h-11 md:w-14 md:h-14 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-colors"
+                aria-label="다음 사진"
+              >
+                <ChevronRight size={28} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ═══════════════════ PROCESS ═══════════════════ */}
       <section id="process" className="py-24 md:py-32 bg-slate-50 border-y border-slate-200 overflow-hidden">

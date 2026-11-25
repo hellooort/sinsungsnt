@@ -499,7 +499,7 @@ export default function App() {
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.15] mb-6 text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.35)]">
               공간을 빛내는<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">금속의 품격</span>
+              <span className="text-[#6cb4ff]">금속의 품격</span>
             </h1>
             <p className="text-lg md:text-xl mb-10 leading-relaxed text-white/95 [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]">
               백화점, 면세점, 브랜드 매장에 필요한 고급 금속 집기와 인테리어를<br className="hidden md:block" /> 정밀한 제작력과 책임 시공으로 완성합니다.

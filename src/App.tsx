@@ -319,6 +319,9 @@ export default function App() {
     setMobileMenuOpen(false);
   };
 
+  // 맨 위(스크롤 전)에서는 메인 사진 위에 흰 글씨 메뉴
+  const navLight = !isScrolled;
+
   const navLinks = [
     { name: '회사소개', id: 'about' },
     { name: '제작분야', id: 'services' },
@@ -372,14 +375,14 @@ export default function App() {
       {/* ─── Navbar ─── */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 py-3 shadow-sm' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-          <button className="text-2xl font-bold tracking-tighter flex items-center gap-2 transition-colors text-brand" onClick={() => scrollTo('hero')} aria-label="홈으로 이동">
+          <button className={`text-2xl font-bold tracking-tighter flex items-center gap-2 transition-colors ${navLight ? 'text-white' : 'text-brand'}`} onClick={() => scrollTo('hero')} aria-label="홈으로 이동">
             <LogoIcon className="w-8 h-8" />
             신성에스엔티
           </button>
 
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navLinks.map((link) => (
-              <button key={link.name} onClick={() => scrollTo(link.id)} className="text-sm font-medium transition-colors text-slate-700 hover:text-brand">
+              <button key={link.name} onClick={() => scrollTo(link.id)} className={`text-sm font-medium transition-colors ${navLight ? 'text-white/90 hover:text-white' : 'text-slate-700 hover:text-brand'}`}>
                 {link.name}
               </button>
             ))}
@@ -387,17 +390,17 @@ export default function App() {
               href={TIMECAPSULE_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold border transition-colors border-brand/30 bg-white/70 text-brand hover:bg-brand/5"
+              className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold border transition-colors ${navLight ? 'border-white/50 text-white hover:bg-white/10' : 'border-brand/30 bg-white/70 text-brand hover:bg-brand/5'}`}
             >
               대한타임캡슐 <ExternalLink size={14} aria-hidden="true" />
               <span className="sr-only">(네이버 스마트스토어, 새 창)</span>
             </a>
-            <button onClick={() => scrollTo('contact')} className="px-5 py-2.5 text-sm font-semibold transition-colors bg-brand text-white hover:bg-brand-dark">
+            <button onClick={() => scrollTo('contact')} className={`px-5 py-2.5 text-sm font-semibold transition-colors ${navLight ? 'bg-white text-brand hover:bg-slate-100' : 'bg-brand text-white hover:bg-brand-dark'}`}>
               문의하기
             </button>
           </div>
 
-          <button className="lg:hidden text-slate-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'} aria-expanded={mobileMenuOpen}>
+          <button className={`lg:hidden ${navLight ? 'text-white' : 'text-slate-900'}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'} aria-expanded={mobileMenuOpen}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -441,19 +444,20 @@ export default function App() {
       )}
 
       {/* ═══════════════════ HERO ═══════════════════ */}
-      <section id="hero" className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-white">
+      {/* 사진은 원래 밝기 그대로 두고, 글씨가 놓이는 왼쪽(모바일은 가운데 아래)과 메뉴 자리만 옅게 어둡게 한다 */}
+      <section id="hero" className="relative h-screen min-h-[600px] flex items-center overflow-hidden bg-slate-200">
         {/* 슬라이드 사진 미리 불러오기 */}
         <div className="hidden" aria-hidden="true">
           {heroSlides.map((s) => <img key={s.img} src={s.img} alt="" />)}
         </div>
 
-        {/* Background: Logo Intro → 시공 매장 슬라이드 */}
         <div className="absolute inset-0 z-0">
+          {/* 첫 접속 로고 화면 */}
           <motion.div
             initial={{ opacity: 1 }}
             animate={{ opacity: introDone ? 0 : 1 }}
             transition={{ duration: 0.8 }}
-            className="absolute inset-0 z-20 bg-white flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 z-40 bg-white flex items-center justify-center pointer-events-none"
             style={{ display: introDone ? 'none' : undefined }}
           >
             <motion.img
@@ -478,9 +482,8 @@ export default function App() {
               className="absolute inset-0 w-full h-full object-cover"
             />
           </AnimatePresence>
-          {/* 밝은 덮개: 사진은 밝게 보이고 왼쪽 글자 영역만 흰색으로 받쳐 준다 */}
-          <div className="absolute inset-0 z-10 bg-white/70 md:bg-transparent md:bg-gradient-to-r md:from-white/90 md:via-white/55 md:to-white/0" />
-          <div className="absolute inset-x-0 bottom-0 h-1/4 z-10 bg-gradient-to-t from-white/70 to-transparent" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-slate-950/15 via-slate-950/35 to-slate-950/45 md:bg-gradient-to-r md:from-slate-950/55 md:via-slate-950/20 md:via-40% md:to-transparent md:to-70%" />
+          <div className="absolute inset-x-0 top-0 h-28 z-10 bg-gradient-to-b from-slate-950/35 to-transparent" />
         </div>
 
         <motion.div
@@ -490,22 +493,22 @@ export default function App() {
           className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 w-full"
         >
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 border border-slate-200 text-sm text-slate-700 font-medium mb-8 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-brand rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium mb-8 bg-white/15 border border-white/30 text-white backdrop-blur-sm">
+              <span className="w-2 h-2 rounded-full animate-pulse bg-white" />
               금속 집기 · 금속 인테리어 전문 제작
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 tracking-tight leading-[1.15] mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.15] mb-6 text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.35)]">
               공간을 빛내는<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">금속의 품격</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">금속의 품격</span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-700 mb-10 leading-relaxed">
+            <p className="text-lg md:text-xl mb-10 leading-relaxed text-white/95 [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]">
               백화점, 면세점, 브랜드 매장에 필요한 고급 금속 집기와 인테리어를<br className="hidden md:block" /> 정밀한 제작력과 책임 시공으로 완성합니다.
             </p>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button onClick={() => scrollTo('contact')} className="w-full sm:w-auto px-8 py-4 bg-brand text-white font-semibold hover:bg-brand-dark transition-colors flex items-center justify-center gap-2 group">
                 제작 문의하기 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button onClick={() => scrollTo('portfolio')} className="w-full sm:w-auto px-8 py-4 border border-slate-400 bg-white/60 text-slate-800 font-semibold hover:bg-white transition-colors">
+              <button onClick={() => scrollTo('portfolio')} className="w-full sm:w-auto px-8 py-4 font-semibold transition-colors border border-white/70 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm">
                 포트폴리오 보기
               </button>
             </div>
@@ -520,10 +523,10 @@ export default function App() {
           className="absolute bottom-8 md:bottom-12 inset-x-0 z-20"
         >
           <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center gap-5">
-            <div className="text-slate-900 text-xs md:text-sm font-semibold tracking-widest whitespace-nowrap">
+            <div className="text-xs md:text-sm font-semibold tracking-widest whitespace-nowrap text-white">
               <span>{String(heroIndex + 1).padStart(2, '0')}</span>
-              <span className="text-slate-400"> / {String(heroSlides.length).padStart(2, '0')}</span>
-              <span className="text-slate-600 ml-3">{heroSlides[heroIndex].brand}</span>
+              <span className="text-white/50"> / {String(heroSlides.length).padStart(2, '0')}</span>
+              <span className="ml-3 text-white/80">{heroSlides[heroIndex].brand}</span>
             </div>
             <div className="flex gap-1.5" role="tablist" aria-label="메인 슬라이드 선택">
               {heroSlides.map((s, idx) => (
@@ -533,7 +536,7 @@ export default function App() {
                   aria-selected={idx === heroIndex}
                   aria-label={`${idx + 1}번째 사진 (${s.brand})`}
                   onClick={() => setHeroIndex(idx)}
-                  className={`h-[3px] transition-all duration-500 ${idx === heroIndex ? 'w-10 bg-slate-900' : 'w-5 bg-slate-900/20 hover:bg-slate-900/50'}`}
+                  className={`h-[3px] transition-all duration-500 ${idx === heroIndex ? 'w-10 bg-white' : 'w-5 bg-white/40 hover:bg-white/70'}`}
                 />
               ))}
             </div>
